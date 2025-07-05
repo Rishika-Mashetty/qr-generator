@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QR_CODE_GENERATOR</title>
+    <link rel="stylesheet" href="./styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.6/axios.min.js"></script>
   </head>
   <body>
-    <div>
+    <div id="signup-form">
       Signup
       <input
         type="text"
@@ -23,7 +24,7 @@
       />
       <button onclick="signup()">Submit</button>
     </div>
-    <div>
+    <div id="signin-form" style="display: none;">
       Signin
       <input
         type="text"
@@ -39,15 +40,6 @@
       />
       <button onclick="signin()">Submit</button>
     </div>
-    <div>
-      User information:
-      <div id="information"></div>
-    </div>
-    <div>
-      <button onclick="logout()">Logout</button>
-    </div>
-
-    <button onclick="window.location.href='/index2'">Go to Page 2</button>
   </body>
   <script>
     async function signup() {
@@ -58,6 +50,8 @@
         password: password,
       });
       alert("Signed up successfully");
+      document.getElementById("signup-form").style.display = "none";
+      document.getElementById("signin-form").style.display = "block";
     }
 
     async function signin() {
