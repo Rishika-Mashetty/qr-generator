@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR_CODE_GENERATOR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.6/axios.min.js"></script>
+  </head>
+  <body>
+    <h1 id="greeting"></h1>
+    <input
+      type="text"
+      name="url"
+      id="url"
+      placeholder="Enter URL to generate QR code"
+    />
+    <button onclick="generateQRCode()">Generate QR Code</button>
+    <img id="qr-image" src="" alt="QR Code will appear here" />
+  </body>
+  <script>
+    getUserName();
+    async function getUserName() {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        const response = await axios.get("http://localhost:3000/me", {
+          headers: {
+            token: token,
+          },
+        });
+        document.getElementById("greeting").innerHTML =
+          "Hello " + response.data.username;
+      }
+    }
+
+    async function generateQRCode() {
+      const url = document.getElementById("url").value;
+      if (!url) {
+        alert("Please enter a URL");
+        return;
+      }
+      const response = await axios.get("http://localhost:3000/generate-qr", {
+        params: { url: url }
+      });
+      document.getElementById("qr-image").src = response.data.qr;
+    }
+  </script>
+</html>
